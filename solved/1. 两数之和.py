@@ -1,6 +1,3 @@
-#coding=gbk
-
-
 class Solution:
     def twoSum(self, nums, target):
         for i in range(0, len(nums)):
