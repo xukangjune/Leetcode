@@ -1,3 +1,6 @@
+"""
+https://blog.csdn.net/Whyalwaysxu/article/details/90919321
+"""
 # Definition for a binary tree node.
 class TreeNode(object):
     def __init__(self, x):
@@ -6,6 +9,7 @@ class TreeNode(object):
         self.right = None
 
 class Codec:
+
     def serialize(self, root):
         """Encodes a tree to a single string.
 
@@ -14,25 +18,21 @@ class Codec:
         """
         ret = []
         if root:
-            queue = [root]
-            while queue:
-                node = queue[0]
-                if node:
-                    if node.left:
-                        queue.append(node.left)
+            nodes = [root]
+            while nodes:
+                temp = []
+                for node in nodes:
+                    if node:
+                        ret.append(node.val)
+                        temp += [node.left, node.right]
                     else:
-                        queue.append(None)
-                    if node.right:
-                        queue.append(node.right)
-                    else:
-                        queue.append(None)
-                    ret.append(node.val)
-                else:
-                    ret.append(None)
-                del queue[0]
-            while not ret[-1]:
-                ret.pop()
-        return str(ret)
+                        ret.append(None)
+                if temp.count(None) == len(temp):
+                    break
+                nodes = temp
+        return ",".join(map(str, ret))
+
+
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
@@ -40,57 +40,47 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        data = data.lstrip('[').rstrip(']').split(',')
-        print(data)
-        n = len(data)
-        print(n)
-        if not data[0]:
-            return
-        for i in range(n):
-            data[i] = int(data[i]) if data[i][-1].isdigit() else None
-        print(data)
-        data[0] = TreeNode(data[0])
-        level = [0]
-        j = 0
-        while level:
-            temp = []
-            if level[0] + 2 * len(level) < n:
-                temp = [level[0] + i for i in range(1, 2 * len(level) + 1)]
-            else:
-                temp = [i for i in range(level[-1]+1, n)]
-            j = 0
-            while j < 2 * len(level):
-                for i in level:
-                    if data[i]:
-                        data[i].left = None if data[temp[j]] is None else TreeNode(data[temp[j]])
-                        j += 1
-                        data[i].right = None if data[temp[j]] is None else TreeNode(data[temp[j]])
-                        j += 1
-
-
-
-
-
-
+        if data:
+            nodes = [TreeNode(int(i)) if i != 'None' else None for i in data.split(',')]
+            print(nodes)
+            n = len(nodes)
+            end = 1
+            start = 0
+            while True:
+                if end >= n:
+                    break
+                nextLevel = end
+                for node in nodes[start:end]:
+                    if node:
+                        node.left = nodes[nextLevel]
+                        node.right = nodes[nextLevel+1]
+                        nextLevel += 2
+                start = end
+                end = nextLevel
+            return nodes[0]
+        return None
 
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()
 # codec.deserialize(codec.serialize(root))
 
-
-solve = Codec()
+node1 = TreeNode(-1)
+node2 = TreeNode(2)
 node3 = TreeNode(3)
 node4 = TreeNode(4)
-node2 = TreeNode(2)
-node2.left = node3
-node2.right = node4
-node6 = TreeNode(6)
 node5 = TreeNode(5)
-node5.right = node6
-node1 = TreeNode(1)
+node6 = TreeNode(6)
+node7 = TreeNode(7)
+node8 = TreeNode(8)
+
+node1.right = node3
 node1.left = node2
-node1.right = node5
-print(solve.serialize(node1))
-print(solve.deserialize('[]'))
-# print(solve.deserialize(solve.serialize(node1)).val)
+# node3.left = node4
+# node3.right = node5
+# node4.left = node6
+# node5.left = node7
+# node5.right = node8
+codec = Codec()
+print(codec.serialize(node1))
+print(codec.deserialize(codec.serialize(node1)).val)
