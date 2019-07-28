@@ -1,3 +1,6 @@
+"""
+https://leetcode.com/problems/candy/discuss/317229/Mysolution-with-O(N)-time-complexity-and-O(1)-space-complexity
+"""
 class Solution:
     def candy(self, ratings) -> int:
         prev = 1

@@ -1,54 +1,65 @@
 class Solution:
-    def candy(self, ratings) -> int:
-        prev = float("inf")
-        ret = 0
-        n = len(ratings)
-        ratings = ratings + [float("inf")]
-        i = 0
-        start = 0
-        while i < n-1:
-            if ratings[i] < ratings[i+1]:
-                while i < n-1 and ratings[i] < ratings[i+1]:
-                    i += 1
-                temp = i - start + 1
-                ret +=(temp + 1) * temp // 2
-                if prev == 1:
-                    ret -= 1
-                start = i
-                prev = temp
-
-            if i < n-1 and ratings[i] == ratings[i+1]:
-                while i < n-1 and ratings[i] == ratings[i+1]:
-                    i += 1
-                if prev != float("inf") or prev == 1:
-                    ret += (i - start)
+    def longestWPI(self, hours) -> int:
+        def help(hours):
+            ret = 0
+            dummy = []
+            big = small = 0
+            start = 0
+            j = 0
+            count = 0
+            while j < len(hours):
+                if hours[j] <= 8:
+                    count += 1
+                    j += 1
                 else:
-                    ret += (i - start + 1)
-                prev = 1
-                start = i
+                    break
 
-            if i < n-1 and ratings[i] > ratings[i+1]:
-                while i < n + 1 and ratings[i] > ratings[i+1]:
-                    i += 1
-                temp = i - start + 1
-                if prev == 1:
-                    ret += (temp + 1) * temp // 2 - 1
-                elif prev == float("inf"):
-                    ret += (temp + 1) * temp // 2
+            print(count)
+
+            for i, num in enumerate(hours):
+                if num > 8:
+                    big += 1
                 else:
-                    if temp > prev:
-                        ret += (temp + 1) * temp // 2 - prev
-                    else:
-                        ret += (temp + 1) * temp // 2 - temp
-                prev = 1
-                start = i
+                    small += 1
+                    if small < big:
+                        continue
 
-        return ret
+                    if small == big:
+                        if dummy and dummy[-1][1] == start - 1:
+                            start = dummy[-1][0]
+                            dummy.pop()
+                        dummy.append([start, i])
+                        big = 0
+                    start = i + 1
+                    small = 0
+
+
+            if big > small:
+                if dummy and dummy[-1][1] == start - 1:
+                    start = dummy[-1][0]
+                    dummy.pop()
+                dummy.append([start, len(hours)])
+            print(dummy)
+            for period in dummy:
+                temp = period[1] - period[0]
+                if temp > ret:
+                    ret = temp
+
+            return ret
+
+        ret1 = help(hours)
+        ret2 = help(hours[::-1])
+
+        return max(ret1, ret2)
+
+
 
 
 solve = Solution()
-# a = [1,2,3,1,0]
-# a = [1,2,87,87,87,2,1]
-# a = [3,2,2,2,2,2,2,2,3]
-a = [1]
-print(solve.candy(a))
+# hours = [9,9,6,0,9,8,9,6,6,9,9,2,3,9,9,9]
+# hours = [9,1,1]
+# hours = [9,9,6,0,6,6,9]
+# hours = [6, 6, 9]
+# hours = [6,6,9,9,9]
+hours = [8,12,7,6,10,10,9,11,12,6]
+print(solve.longestWPI(hours))
