@@ -18,6 +18,43 @@ class Solution:
             ret += [[nums[i]]+num for num in temp]
         return ret
 
+    #另一种解法
+    # class Solution:
+    #     def permute(self, nums):
+    #         n = len(nums)
+    #         ret = []
+    #
+    #         def dfs(cnt, k, tmp):
+    #             if cnt == n:
+    #                 ret.append(k)
+    #                 return
+    #             else:
+    #                 for i in range(len(tmp)):
+    #                     tmp[0], tmp[i] = tmp[i], tmp[0]
+    #                     dfs(cnt + 1, k + [tmp[0]], tmp[1:])
+    #                     tmp[0], tmp[i] = tmp[i], tmp[0]
+    #
+    #         dfs(0, [], nums)
+    #         print(ret)
+
+    # 另一种方法
+    # class Solution:
+    #     def permute(self, nums):
+    #         n = len(nums)
+    #         ret = []
+    #
+    #         def dfs(i, k):
+    #             if i == n:
+    #                 ret.append(k)
+    #                 return
+    #             else:
+    #                 for j in range(i, n):
+    #                     nums[i], nums[j] = nums[j], nums[i]
+    #                     dfs(i + 1, k + [nums[i]])
+    #                     nums[i], nums[j] = nums[j], nums[i]
+    #
+    #         dfs(0, [])
+    #         return ret
 
 solve = Solution()
 nums = [1,2,3]

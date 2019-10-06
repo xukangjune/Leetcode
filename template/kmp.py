@@ -38,7 +38,7 @@ class KMP():
         return -1
 
 
-s = 'abcdcefdds'
+s = 'abadfababadg'
 p = 'ababab'
 demo = KMP(s, p)
 print(demo.matching())

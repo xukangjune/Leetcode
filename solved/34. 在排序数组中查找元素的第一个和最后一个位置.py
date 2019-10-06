@@ -25,16 +25,20 @@ class Solution:
         left = 0
         right = len(nums) - 1
         while left < right:
+            print(left, right)
             if nums[right] == target:
                 ret2 = right
                 break
             mid = (left + right) // 2 + 1
+            print(mid)
             if nums[mid] < target:
                 left = mid + 1
             elif nums[mid] == target:
                 left = mid
             else:
                 right = mid-1
+
+            print(left, right)
         if nums[left] == target and ret2 == -1:
             ret2 = left
 
@@ -43,6 +47,8 @@ class Solution:
 
 solve = Solution()
 # nums = [5,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,10]
-target = 8
-nums = [8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8]
+target = 6
+nums = [5,7,7,8,8,10]
+# nums = [1,2,3,3,3,3,4,5,9]
+# nums = [8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8]
 print(solve.searchRange(nums, target))

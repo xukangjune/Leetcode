@@ -14,6 +14,24 @@ class Solution:
         return ret
 
 
+    # 另一种方法，用的全排列
+    # def letterCombinations(self, digits):
+    #     if not digits:
+    #         return
+    #     map = {"2": "abc", "3": "def", "4": "ghi", "5": "jkl", "6": "mno", "7": "pqrs", "8": "tuv", "9": "wxyz"}
+    #     ret = [""]
+    #     while digits:
+    #         c = digits[0]
+    #         tmp = []
+    #         for i in ret:
+    #             for j in map[c]:
+    #                 tmp.append(i+j)
+    #         digits = digits[1:]
+    #         ret = tmp
+    #
+    #     return ret
+
+
 solve = Solution()
-a = "234"
+a = "23465"
 print(solve.letterCombinations(a))

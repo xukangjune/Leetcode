@@ -15,11 +15,13 @@ class Solution:
                 nums[i] = nums[nums[i] - 1]
                 nums[temp - 1] = temp
 
+        print(nums)
         for i in range(n):
             if nums[i] != i + 1:
                 print(i+1)
                 return i + 1
+        return n+1
 
 solve = Solution()
-a = [1, 1, 2]
+a = [1, 2,0]
 solve.firstMissingPositive(a)

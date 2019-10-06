@@ -19,7 +19,7 @@ class Solution:
                         ret.append(temp + [target - nums[i], nums[i]])
                         bag.add(nums[i])
                         i += 1
-                        while i < n and nums[i-1] == nums[i]:
+                        while i < n and nums[i-1] == nums[i]:  #消除重复项
                             i += 1
                         continue
                     bag.add(nums[i])

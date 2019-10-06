@@ -8,12 +8,12 @@ i - currPos，这里可能比真正的长度小了1，但是后面会给补上�
 class Solution:
     def lengthOfLongestSubstring(self, s):
         charsDict = {}
-        currPos = 0
+        currPos = 0  #当前段的起点
         length = 0
         ret = 0
         for i, char in enumerate(s):
             if char in charsDict:
-                if charsDict[char] >= currPos:
+                if charsDict[char] >= currPos:  #如果遍历到的字母在map中，但是是上次遗留的值。那么对于本段来说。还是新的值。
                     ret = max(ret, length)
                     currPos = charsDict[char]+1
                     length = i - currPos

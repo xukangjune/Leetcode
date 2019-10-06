@@ -6,7 +6,7 @@ class Solution(object):
     def threeSumClosest(self, nums, target):
         """
         :type nums: List[int]
-        :type target: int
+        :type target: int 
         :rtype: int
         """
         n = len(nums) - 1
